@@ -34,11 +34,25 @@ app.get("/skills", (req, res) => {
             console.log(err);
         });
 });
+app.get("/skills/id", (req, res) => {
+    Skill.findById(req.body.skill_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Skill does not exist!",
+            });
+        } else {
+            res.send({
+                success: true,
+                data: result,
+            });
+        }
+    });
+});
 
 app.post("/skills", (req, res) => {
     // check if skill exist
     Skill.findOne({ name: req.body.name }).then((result) => {
-        console.log("RESULT", result);
         if (!result) {
             const skill = new Skill({
                 name: req.body.name,
@@ -50,12 +64,11 @@ app.post("/skills", (req, res) => {
                     res.send({
                         success: true,
                         message: "Skill added!",
-                        data:result
+                        data: result,
                     });
                 })
                 .catch((err) => res.send(err));
-        }
-        else{
+        } else {
             res.send({
                 success: false,
                 message: "Skill already exists!",
