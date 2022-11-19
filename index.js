@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Skill = require("./models/skill");
 const Project = require("./models/project");
-const Experience = require("./models/experience")
+const Experience = require("./models/experience");
 require("dotenv").config();
 
 const app = express();
@@ -227,28 +227,30 @@ app.put("/projects", (req, res) => {
 });
 
 app.delete("/projects", (req, res) => {
-    Project.findById(req.body.project_Id).then((result) => {
-        if (!result) {
+    Project.findById(req.body.project_Id)
+        .then((result) => {
+            if (!result) {
+                res.send({
+                    success: false,
+                    message: "Project does not exist!",
+                });
+            } else {
+                Project.deleteOne(result).then((result) => {
+                    console.log(result);
+                    // delete the skill
+                    res.send({
+                        success: true,
+                        message: "Project deleted",
+                    });
+                });
+            }
+        })
+        .catch((err) => {
             res.send({
                 success: false,
-                message: "Project does not exist!",
+                message: err,
             });
-        } else {
-            Project.deleteOne(result).then((result) => {
-                console.log(result);
-                // delete the skill
-                res.send({
-                    success: true,
-                    message: "Project deleted",
-                });
-            });
-        }
-    }).catch((err)=>{
-        res.send({
-            success:false,
-            message:err
-        })
-    });
+        });
 });
 
 // ===============================experience===============================
@@ -269,4 +271,43 @@ app.get("/experiences", (req, res) => {
         });
 });
 
+app.get("/experiences/id", (req, res) => {
+    Experience.findById(req.body.experience_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Experience does not exist!",
+            });
+        } else {
+            res.send({
+                success: true,
+                data: result,
+            });
+        }
+    });
+});
+app.post("/experiences", (req, res) => {
+    const experience = new Experience({
+        companyName: req.body.companyName,
+        start: req.body.start,
+        end: req.body.end,
+        desc: req.body.desc,
+        roleName: req.body.roleName,
+    });
+    experience
+        .save()
+        .then((result) => {
+            res.send({
+                success: true,
+                message: "Experience added!",
+                data: result,
+            });
+        })
+        .catch((err) =>
+            res.send({
+                success: false,
+                message: err,
+            })
+        );
+});
 app.listen(3000);
