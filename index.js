@@ -251,4 +251,22 @@ app.delete("/projects", (req, res) => {
     });
 });
 
+// ===============================experience===============================
+app.get("/experiences", (req, res) => {
+    Experience.find()
+        .then((result) => {
+            res.send({
+                success: true,
+                data: result,
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.send({
+                success: false,
+                message: err,
+            });
+        });
+});
+
 app.listen(3000);
