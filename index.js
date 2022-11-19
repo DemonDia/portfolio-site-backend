@@ -225,4 +225,29 @@ app.put("/projects", (req, res) => {
     });
 });
 
+app.delete("/projects", (req, res) => {
+    Project.findById(req.body.project_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Project does not exist!",
+            });
+        } else {
+            Project.deleteOne(result).then((result) => {
+                console.log(result);
+                // delete the skill
+                res.send({
+                    success: true,
+                    message: "Project deleted",
+                });
+            });
+        }
+    }).catch((err)=>{
+        res.send({
+            success:false,
+            message:err
+        })
+    });
+});
+
 app.listen(3000);
