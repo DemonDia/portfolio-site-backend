@@ -115,7 +115,7 @@ app.put("/skills", async (req, res) => {
     });
 });
 
-app.delete("/skills", async (req, res) => {
+app.delete("/skills/:skill_Id", async (req, res) => {
     await Skill.findById(req.params.skill_Id).then((result) => {
         if (!result) {
             res.send({
