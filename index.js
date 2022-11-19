@@ -131,6 +131,22 @@ app.delete("/skills", (req, res) => {
     });
 });
 
+app.delete("/skills/deleteall", (req, res) => {
+    Skill.deleteMany()
+        .then((result) => {
+            res.send({
+                success: true,
+                message: "Skills reset",
+            });
+        })
+        .catch((err) => {
+            res.send({
+                success: false,
+                message: err,
+            });
+        });
+});
+
 // ===============================projects===============================
 app.get("/projects", (req, res) => {
     Project.find()
@@ -253,6 +269,21 @@ app.delete("/projects", (req, res) => {
         });
 });
 
+app.delete("/projects/deleteall", (req, res) => {
+    Project.deleteMany()
+        .then((result) => {
+            res.send({
+                success: true,
+                message: "Projects reset",
+            });
+        })
+        .catch((err) => {
+            res.send({
+                success: false,
+                message: err,
+            });
+        });
+});
 // ===============================experience===============================
 app.get("/experiences", (req, res) => {
     Experience.find()
@@ -371,4 +402,19 @@ app.delete("/experiences", (req, res) => {
         });
 });
 
+app.delete("/experiences/deleteall", (req, res) => {
+    Experience.deleteMany()
+        .then((result) => {
+            res.send({
+                success: true,
+                message: "Experiences reset",
+            });
+        })
+        .catch((err) => {
+            res.send({
+                success: false,
+                message: err,
+            });
+        });
+});
 app.listen(3000);
