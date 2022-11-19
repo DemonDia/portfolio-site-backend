@@ -169,8 +169,8 @@ app.get("/projects", async (req, res) => {
         });
 });
 
-app.get("/projects/id", async (req, res) => {
-    await Project.findById(req.body.project_Id).then((result) => {
+app.get("/projects/:project_Id", async (req, res) => {
+    await Project.findById(req.params.project_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -246,8 +246,8 @@ app.put("/projects", async (req, res) => {
     });
 });
 
-app.delete("/projects", async (req, res) => {
-    await Project.findById(req.body.project_Id)
+app.delete("/projects/:project_Id", async (req, res) => {
+    await Project.findById(req.params.project_Id)
         .then((result) => {
             if (!result) {
                 res.send({
@@ -306,8 +306,8 @@ app.get("/experiences", async (req, res) => {
         });
 });
 
-app.get("/experiences/id", async (req, res) => {
-    await Experience.findById(req.body.experience_Id).then((result) => {
+app.get("/experiences/:experience_Id", async (req, res) => {
+    await Experience.findById(req.params.experience_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -379,8 +379,8 @@ app.put("/experiences", async (req, res) => {
     });
 });
 
-app.delete("/experiences", async (req, res) => {
-    await Experience.findById(req.body.experience_Id)
+app.delete("/experiences/:experience_Id", async (req, res) => {
+    await Experience.findById(req.params.experience_Id)
         .then((result) => {
             if (!result) {
                 res.send({
