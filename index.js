@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Skill = require("./models/skill");
 const Project = require("./models/project");
+const Experience = require("./models/experience")
 require("dotenv").config();
 
 const app = express();
