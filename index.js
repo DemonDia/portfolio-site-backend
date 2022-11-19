@@ -74,7 +74,12 @@ app.post("/skills", (req, res) => {
                         data: result,
                     });
                 })
-                .catch((err) => res.send(err));
+                .catch((err) =>
+                    res.send({
+                        success: false,
+                        message: err,
+                    })
+                );
         } else {
             res.send({
                 success: false,
@@ -143,4 +148,42 @@ app.get("/projects", (req, res) => {
         });
 });
 
+app.get("/projects/id", (req, res) => {
+    Project.findById(req.body.project_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Project does not exist!",
+            });
+        } else {
+            res.send({
+                success: true,
+                data: result,
+            });
+        }
+    });
+});
+
+app.post("/projects", (req, res) => {
+    const project = new Project({
+        name: req.body.name,
+        year: req.body.year,
+        desc: req.body.desc,
+        imageLink: req.body.imageLink,
+        techStack: req.body.techStack,
+        links: req.body.links,
+    });
+    project.save().then((result) => {
+        res.send({
+            success: true,
+            message: "Project added!",
+            data: result,
+        })
+    }).catch((err) =>
+    res.send({
+        success: false,
+        message: err,
+    })
+);;
+});
 app.listen(3000);

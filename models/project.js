@@ -16,7 +16,7 @@ const projectSchema = new Schema({
     },
     imageLink: {
         type: String,
-        required: true,
+        required: false,
     },
     techStack: {
         type: Array,
