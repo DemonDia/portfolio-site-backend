@@ -27,8 +27,8 @@ app.get("/", (req, res) => {
 });
 
 // ===============================skills===============================
-app.get("/skills", (req, res) => {
-    Skill.find()
+app.get("/skills", async (req, res) => {
+    await Skill.find()
         .then((result) => {
             res.send({
                 success: true,
@@ -43,8 +43,8 @@ app.get("/skills", (req, res) => {
             });
         });
 });
-app.get("/skills/id", (req, res) => {
-    Skill.findById(req.body.skill_Id).then((result) => {
+app.get("/skills/id", async (req, res) => {
+    await Skill.findById(req.body.skill_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -58,9 +58,9 @@ app.get("/skills/id", (req, res) => {
         }
     });
 });
-app.post("/skills", (req, res) => {
+app.post("/skills", async (req, res) => {
     // check if skill exist
-    Skill.findOne({ name: req.body.name }).then((result) => {
+    await Skill.findOne({ name: req.body.name }).then((result) => {
         if (!result) {
             const skill = new Skill({
                 name: req.body.name,
@@ -90,8 +90,8 @@ app.post("/skills", (req, res) => {
     });
 });
 
-app.put("/skills", (req, res) => {
-    Skill.findById(req.body.skill_Id).then((result) => {
+app.put("/skills", async (req, res) => {
+    await Skill.findById(req.body.skill_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -111,8 +111,8 @@ app.put("/skills", (req, res) => {
     });
 });
 
-app.delete("/skills", (req, res) => {
-    Skill.findById(req.body.skill_Id).then((result) => {
+app.delete("/skills", async (req, res) => {
+    await Skill.findById(req.body.skill_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -131,8 +131,8 @@ app.delete("/skills", (req, res) => {
     });
 });
 
-app.delete("/skills/deleteall", (req, res) => {
-    Skill.deleteMany()
+app.delete("/skills/deleteall", async (req, res) => {
+    await Skill.deleteMany()
         .then((result) => {
             res.send({
                 success: true,
@@ -148,8 +148,8 @@ app.delete("/skills/deleteall", (req, res) => {
 });
 
 // ===============================projects===============================
-app.get("/projects", (req, res) => {
-    Project.find()
+app.get("/projects", async (req, res) => {
+    await Project.find()
         .then((result) => {
             res.send({
                 success: true,
@@ -165,8 +165,8 @@ app.get("/projects", (req, res) => {
         });
 });
 
-app.get("/projects/id", (req, res) => {
-    Project.findById(req.body.project_Id).then((result) => {
+app.get("/projects/id", async (req, res) => {
+    await Project.findById(req.body.project_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -181,7 +181,7 @@ app.get("/projects/id", (req, res) => {
     });
 });
 
-app.post("/projects", (req, res) => {
+app.post("/projects", async (req, res) => {
     const project = new Project({
         name: req.body.name,
         year: req.body.year,
@@ -190,7 +190,7 @@ app.post("/projects", (req, res) => {
         techStack: req.body.techStack,
         links: req.body.links,
     });
-    project
+    await project
         .save()
         .then((result) => {
             res.send({
@@ -207,8 +207,8 @@ app.post("/projects", (req, res) => {
         );
 });
 
-app.put("/projects", (req, res) => {
-    Project.findById(req.body.project_Id).then((result) => {
+app.put("/projects", async (req, res) => {
+    await Project.findById(req.body.project_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -242,8 +242,8 @@ app.put("/projects", (req, res) => {
     });
 });
 
-app.delete("/projects", (req, res) => {
-    Project.findById(req.body.project_Id)
+app.delete("/projects", async (req, res) => {
+    await Project.findById(req.body.project_Id)
         .then((result) => {
             if (!result) {
                 res.send({
@@ -269,8 +269,8 @@ app.delete("/projects", (req, res) => {
         });
 });
 
-app.delete("/projects/deleteall", (req, res) => {
-    Project.deleteMany()
+app.delete("/projects/deleteall", async (req, res) => {
+    await Project.deleteMany()
         .then((result) => {
             res.send({
                 success: true,
@@ -285,8 +285,8 @@ app.delete("/projects/deleteall", (req, res) => {
         });
 });
 // ===============================experience===============================
-app.get("/experiences", (req, res) => {
-    Experience.find()
+app.get("/experiences", async (req, res) => {
+    await Experience.find()
         .then((result) => {
             res.send({
                 success: true,
@@ -302,8 +302,8 @@ app.get("/experiences", (req, res) => {
         });
 });
 
-app.get("/experiences/id", (req, res) => {
-    Experience.findById(req.body.experience_Id).then((result) => {
+app.get("/experiences/id", async (req, res) => {
+    await Experience.findById(req.body.experience_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -317,7 +317,7 @@ app.get("/experiences/id", (req, res) => {
         }
     });
 });
-app.post("/experiences", (req, res) => {
+app.post("/experiences", async (req, res) => {
     const experience = new Experience({
         companyName: req.body.companyName,
         start: req.body.start,
@@ -325,7 +325,7 @@ app.post("/experiences", (req, res) => {
         desc: req.body.desc,
         roleName: req.body.roleName,
     });
-    experience
+    await experience
         .save()
         .then((result) => {
             res.send({
@@ -341,8 +341,8 @@ app.post("/experiences", (req, res) => {
             })
         );
 });
-app.put("/experiences", (req, res) => {
-    Experience.findById(req.body.experience_Id).then((result) => {
+app.put("/experiences", async (req, res) => {
+    await Experience.findById(req.body.experience_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
@@ -375,8 +375,8 @@ app.put("/experiences", (req, res) => {
     });
 });
 
-app.delete("/experiences", (req, res) => {
-    Experience.findById(req.body.experience_Id)
+app.delete("/experiences", async (req, res) => {
+    await Experience.findById(req.body.experience_Id)
         .then((result) => {
             if (!result) {
                 res.send({
@@ -402,8 +402,8 @@ app.delete("/experiences", (req, res) => {
         });
 });
 
-app.delete("/experiences/deleteall", (req, res) => {
-    Experience.deleteMany()
+app.delete("/experiences/deleteall", async (req, res) => {
+    await Experience.deleteMany()
         .then((result) => {
             res.send({
                 success: true,
