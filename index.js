@@ -47,11 +47,11 @@ app.get("/skills", async (req, res) => {
         });
 });
 app.get("/skills/id", async (req, res) => {
-    await Skill.findById(req.body.skill_Id).then((result) => {
+    await Skill.findById(req.params.skill_Id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
-                info:req.body,
+                info:req.params,
                 message: "Skill does not exist!",
             });
         } else {
