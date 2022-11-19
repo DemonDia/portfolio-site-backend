@@ -310,4 +310,65 @@ app.post("/experiences", (req, res) => {
             })
         );
 });
+app.put("/experiences", (req, res) => {
+    Experience.findById(req.body.experience_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Experience does not exist!",
+            });
+        } else {
+            Experience.updateOne(
+                { _id: result._id },
+                {
+                    companyName: req.body.companyName,
+                    start: req.body.start,
+                    end: req.body.end,
+                    desc: req.body.desc,
+                    roleName: req.body.roleName,
+                }
+            )
+                .then((result) => {
+                    res.send({
+                        success: true,
+                        message: "Experience updated",
+                    });
+                })
+                .catch((err) => {
+                    res.send({
+                        success: false,
+                        message: err,
+                    });
+                });
+        }
+    });
+});
+
+app.delete("/experiences", (req, res) => {
+    Experience.findById(req.body.experience_Id)
+        .then((result) => {
+            if (!result) {
+                res.send({
+                    success: false,
+                    message: "Experience does not exist!",
+                });
+            } else {
+                Experience.deleteOne(result).then((result) => {
+                    console.log(result);
+                    // delete the skill
+                    res.send({
+                        success: true,
+                        message: "Experience deleted",
+                    });
+                });
+            }
+        })
+        .catch((err) => {
+            res.send({
+                success: false,
+                message: err,
+            });
+        });
+});
+
 app.listen(3000);
