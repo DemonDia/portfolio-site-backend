@@ -173,17 +173,56 @@ app.post("/projects", (req, res) => {
         techStack: req.body.techStack,
         links: req.body.links,
     });
-    project.save().then((result) => {
-        res.send({
-            success: true,
-            message: "Project added!",
-            data: result,
+    project
+        .save()
+        .then((result) => {
+            res.send({
+                success: true,
+                message: "Project added!",
+                data: result,
+            });
         })
-    }).catch((err) =>
-    res.send({
-        success: false,
-        message: err,
-    })
-);;
+        .catch((err) =>
+            res.send({
+                success: false,
+                message: err,
+            })
+        );
 });
+
+app.put("/projects", (req, res) => {
+    Project.findById(req.body.project_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Project does not exist!",
+            });
+        } else {
+            Project.updateOne(
+                { _id: result._id },
+                {
+                    name: req.body.name,
+                    year: req.body.year,
+                    desc: req.body.desc,
+                    imageLink: req.body.imageLink,
+                    techStack: req.body.techStack,
+                    links: req.body.links,
+                }
+            )
+                .then((result) => {
+                    res.send({
+                        success: true,
+                        message: "Project updated",
+                    });
+                })
+                .catch((err) => {
+                    res.send({
+                        success: false,
+                        message: err,
+                    });
+                });
+        }
+    });
+});
+
 app.listen(3000);
