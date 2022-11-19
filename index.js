@@ -49,7 +49,6 @@ app.get("/skills/id", (req, res) => {
         }
     });
 });
-
 app.post("/skills", (req, res) => {
     // check if skill exist
     Skill.findOne({ name: req.body.name }).then((result) => {
@@ -77,4 +76,45 @@ app.post("/skills", (req, res) => {
     });
 });
 
-app.listen(5000);
+app.put("/skills", (req, res) => {
+    Skill.findById(req.body.skill_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Skill does not exist!",
+            });
+        } else {
+            Skill.updateOne(
+                { _id: result._id },
+                { name: req.body.name, year_learnt: req.body.year_learnt }
+            ).then((result)=>{
+                res.send({
+                    success: true,
+                    message: "Skill updated",
+                });
+            });
+        }
+    });
+});
+
+app.delete("/skills", (req, res) => {
+    Skill.findById(req.body.skill_Id).then((result) => {
+        if (!result) {
+            res.send({
+                success: false,
+                message: "Skill does not exist!",
+            });
+        } else {
+            Skill.deleteOne(result).then((result) => {
+                console.log(result);
+                // delete the skill
+                res.send({
+                    success: true,
+                    message: "Skill deleted",
+                });
+            });
+        }
+    });
+});
+
+app.listen(3000);
