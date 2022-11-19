@@ -51,6 +51,7 @@ app.get("/skills/id", async (req, res) => {
         if (!result) {
             res.send({
                 success: false,
+                info:req.body,
                 message: "Skill does not exist!",
             });
         } else {
