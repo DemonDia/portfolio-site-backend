@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Skill = require("./models/skill");
+const Project = require("./models/project");
 require("dotenv").config();
 
 const app = express();
@@ -28,10 +29,17 @@ app.get("/", (req, res) => {
 app.get("/skills", (req, res) => {
     Skill.find()
         .then((result) => {
-            res.send(result);
+            res.send({
+                success: true,
+                data: result,
+            });
         })
         .catch((err) => {
             console.log(err);
+            res.send({
+                success: false,
+                message: err,
+            });
         });
 });
 app.get("/skills/id", (req, res) => {
@@ -87,7 +95,7 @@ app.put("/skills", (req, res) => {
             Skill.updateOne(
                 { _id: result._id },
                 { name: req.body.name, year_learnt: req.body.year_learnt }
-            ).then((result)=>{
+            ).then((result) => {
                 res.send({
                     success: true,
                     message: "Skill updated",
@@ -115,6 +123,24 @@ app.delete("/skills", (req, res) => {
             });
         }
     });
+});
+
+// ===============================projects===============================
+app.get("/projects", (req, res) => {
+    Project.find()
+        .then((result) => {
+            res.send({
+                success: true,
+                data: result,
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.send({
+                success: false,
+                message: err,
+            });
+        });
 });
 
 app.listen(3000);
