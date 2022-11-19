@@ -46,8 +46,8 @@ app.get("/skills", async (req, res) => {
             });
         });
 });
-app.get("/skills/id", async (req, res) => {
-    await Skill.findById(req.params.skill_Id).then((result) => {
+app.get("/skills/:id", async (req, res) => {
+    await Skill.findById(req.params.id).then((result) => {
         if (!result) {
             res.send({
                 success: false,
