@@ -2,25 +2,33 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const experienceSchema = new Schema({
-    companyName: {
+    company_name: {
         type: String,
         required: true,
     },
-    start: {
+    starting: {
         type: String,
         required: true,
     },
-    end: {
+    ending: {
         type: String,
         required: true,
     },
-    desc: {
+    details: {
+        type: Array,
+        required: true,
+    },
+    title: {
         type: String,
         required: true,
     },
-    roleName: {
+    status: {
         type: String,
         required: true,
+    },
+    website: {
+        type: String,
+        required: false,
     },
 });
 

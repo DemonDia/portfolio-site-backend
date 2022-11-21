@@ -14,11 +14,11 @@ const projectSchema = new Schema({
         type: String,
         required: true,
     },
-    imageLink: {
+    image: {
         type: String,
         required: false,
     },
-    techStack: {
+    tech_stack: {
         type: Array,
         required: true,
     },
