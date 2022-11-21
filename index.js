@@ -155,8 +155,8 @@ app.post("/skills/import",async(req,res)=>{
     const importedSkills = req.body.skills
     var skillDocList = []
     for(var skill in importedSkills){
-        var skillToAdd = new Skill({...skill})
-        skillDocList.push(skillToAdd)
+        // var skillToAdd = new Skill({...skill})
+        skillDocList.push(skill)
     }
     Skill.insertMany(skillDocList).then((res)=>{
         res.send({
