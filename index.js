@@ -153,17 +153,18 @@ app.delete("/skills/", async (req, res) => {
 
 app.post("/skills/import",async(req,res)=>{
     const importedSkills = req.body.skills
+    console.log(importedSkills)
     var skillDocList = []
     for(var skill in importedSkills){
-        // var skillToAdd = new Skill({...skill})
-        skillDocList.push(skill)
+        skillDocList.push(importedSkills[skill])
     }
-    Skill.insertMany(skillDocList).then((res)=>{
+    Skill.insertMany(skillDocList).then((result)=>{
         res.send({
             "success":true,
-            "message":imported
+            "message":"Import success"
         })
     }).catch((err)=>{
+        console.log(err)
         res.send({
             "success":false,
             "message":err
