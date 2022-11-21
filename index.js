@@ -136,7 +136,7 @@ app.delete("/skills/:skill_Id", async (req, res) => {
 });
 
 app.delete("/skills/", async (req, res) => {
-    await Skill.delete({})
+    await Skill.deleteMany({})
         .then((result) => {
             res.send({
                 success: true,
