@@ -328,7 +328,8 @@ app.post("/experiences", async (req, res) => {
         ending: req.body.ending,
         details: req.body.details,
         title: req.body.title,
-        website:req.body.website
+        website:req.body.website,
+        status:req.body.status
     });
     await experience
         .save()
@@ -362,7 +363,8 @@ app.put("/experiences", async (req, res) => {
                     ending: req.body.ending,
                     details: req.body.details,
                     title: req.body.title,
-                    website:req.body.website
+                    website:req.body.website,
+                    status:req.body.status
                 }
             )
                 .then((result) => {
