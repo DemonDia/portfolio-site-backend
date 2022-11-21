@@ -136,7 +136,7 @@ app.delete("/skills/:skill_Id", async (req, res) => {
 });
 
 app.delete("/skills/deleteall", async (req, res) => {
-    await Skill.deleteMany()
+    await Skill.deleteMany({})
         .then((result) => {
             res.send({
                 success: true,
@@ -274,7 +274,7 @@ app.delete("/projects/:project_Id", async (req, res) => {
 });
 
 app.delete("/projects/deleteall", async (req, res) => {
-    await Project.deleteMany()
+    await Project.deleteMany({})
         .then((result) => {
             res.send({
                 success: true,
@@ -409,7 +409,7 @@ app.delete("/experiences/:experience_Id", async (req, res) => {
 });
 
 app.delete("/experiences/deleteall", async (req, res) => {
-    await Experience.deleteMany()
+    await Experience.deleteMany({})
         .then((result) => {
             res.send({
                 success: true,
