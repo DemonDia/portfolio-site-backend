@@ -323,11 +323,12 @@ app.get("/experiences/:experience_Id", async (req, res) => {
 });
 app.post("/experiences", async (req, res) => {
     const experience = new Experience({
-        companyName: req.body.companyName,
-        start: req.body.start,
-        end: req.body.end,
-        desc: req.body.desc,
-        roleName: req.body.roleName,
+        company_name: req.body.company_name,
+        starting: req.body.starting,
+        ending: req.body.ending,
+        details: req.body.details,
+        title: req.body.title,
+        website:req.body.website
     });
     await experience
         .save()
@@ -356,11 +357,12 @@ app.put("/experiences", async (req, res) => {
             Experience.updateOne(
                 { _id: result._id },
                 {
-                    companyName: req.body.companyName,
-                    start: req.body.start,
-                    end: req.body.end,
-                    desc: req.body.desc,
-                    roleName: req.body.roleName,
+                    company_name: req.body.company_name,
+                    starting: req.body.starting,
+                    ending: req.body.ending,
+                    details: req.body.details,
+                    title: req.body.title,
+                    website:req.body.website
                 }
             )
                 .then((result) => {
