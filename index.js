@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors') 
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 const Skill = require("./models/skill");
@@ -8,7 +8,7 @@ const Experience = require("./models/experience");
 require("dotenv").config();
 
 const app = express();
-app.use(cors())
+app.use(cors());
 
 database_uri = process.env.DATABASE_URI;
 app.use(express.json());
@@ -51,7 +51,7 @@ app.get("/skills/:id", async (req, res) => {
         if (!result) {
             res.send({
                 success: false,
-                info:req.params,
+                info: req.params,
                 message: "Skill does not exist!",
             });
         } else {
@@ -151,26 +151,61 @@ app.delete("/skills/", async (req, res) => {
         });
 });
 
-app.post("/skills/import",async(req,res)=>{
-    const importedSkills = req.body.skills
-    console.log(importedSkills)
-    var skillDocList = []
-    for(var skill in importedSkills){
-        skillDocList.push(importedSkills[skill])
+app.post("/import", async (req, res) => {
+    var success = true;
+    const importedSkills = req.body.skills;
+    const importedExperiences = req.body.experiences;
+    const importedProjects = req.body.projects;
+
+    var skillDocList = [];
+    var experienceDocList = [];
+    var projectDocList = [];
+    for (var skill in importedSkills) {
+        skillDocList.push(importedSkills[skill]);
     }
-    Skill.insertMany(skillDocList).then((result)=>{
-        res.send({
-            "success":true,
-            "message":"Import success"
+    for (var experience in importedExperiences) {
+        experienceDocList.push(importedExperiences[experience]);
+    }
+    for (var project in importedProjects) {
+        projectDocList.push(importedProjects[project]);
+    }
+    Skill.insertMany(skillDocList)
+        .then((result) => {
+            success = true;
         })
-    }).catch((err)=>{
-        console.log(err)
-        res.send({
-            "success":false,
-            "message":err
+        .catch((err) => {
+            console.log(err);
+            success = false;
+        });
+
+    Project.insertMany(projectDocList)
+        .then((result) => {
+            success = true;
         })
-    })
-})
+        .catch((err) => {
+            console.log(err);
+            success = false;
+        });
+    Experience.insertMany(experienceDocList)
+        .then((result) => {
+            success = true;
+        })
+        .catch((err) => {
+            console.log(err);
+            success = false;
+        });
+    if (success) {
+        res.send({
+            success: true,
+            message: "import success",
+        });
+    } else {
+        res.send({
+            success: false,
+            message: "import failed",
+        });
+    }
+});
 
 // ===============================projects===============================
 app.get("/projects", async (req, res) => {
@@ -349,8 +384,8 @@ app.post("/experiences", async (req, res) => {
         ending: req.body.ending,
         details: req.body.details,
         title: req.body.title,
-        website:req.body.website,
-        status:req.body.status
+        website: req.body.website,
+        status: req.body.status,
     });
     await experience
         .save()
@@ -384,8 +419,8 @@ app.put("/experiences", async (req, res) => {
                     ending: req.body.ending,
                     details: req.body.details,
                     title: req.body.title,
-                    website:req.body.website,
-                    status:req.body.status
+                    website: req.body.website,
+                    status: req.body.status,
                 }
             )
                 .then((result) => {
