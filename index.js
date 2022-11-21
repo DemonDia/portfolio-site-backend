@@ -190,8 +190,8 @@ app.post("/projects", async (req, res) => {
         name: req.body.name,
         year: req.body.year,
         desc: req.body.desc,
-        imageLink: req.body.imageLink,
-        techStack: req.body.techStack,
+        image: req.body.image,
+        tech_stack: req.body.tech_stack,
         links: req.body.links,
     });
     await project
@@ -225,8 +225,8 @@ app.put("/projects", async (req, res) => {
                     name: req.body.name,
                     year: req.body.year,
                     desc: req.body.desc,
-                    imageLink: req.body.imageLink,
-                    techStack: req.body.techStack,
+                    image: req.body.image,
+                    tech_stack: req.body.tech_stack,
                     links: req.body.links,
                 }
             )
